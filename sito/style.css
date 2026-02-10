@@ -1,0 +1,485 @@
+/* =========================================================
+   NeuroMove Systems — style.css
+   Design: Refined medical-tech, clean & accessible
+   Fonts: Lexend (body) + Sora (headings)
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Sora:wght@400;600;700;800&display=swap');
+
+/* ---------------------------------------------------------
+   CSS Variables
+   --------------------------------------------------------- */
+:root {
+  --navy:       #0E2340;
+  --teal:       #0891B2;
+  --teal-light: #06B6D4;
+  --teal-pale:  #E0F7FA;
+  --accent:     #0EA5E9;
+  --bg:         #F4F8FB;
+  --surface:    #FFFFFF;
+  --text:       #1E293B;
+  --text-muted: #64748B;
+  --border:     #DDE6EF;
+  --shadow-sm:  0 2px 8px rgba(14, 35, 64, 0.08);
+  --shadow-md:  0 6px 24px rgba(14, 35, 64, 0.12);
+  --shadow-lg:  0 16px 48px rgba(14, 35, 64, 0.16);
+  --radius:     12px;
+  --radius-sm:  8px;
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --max-width:  1100px;
+}
+
+/* ---------------------------------------------------------
+   Reset & Base
+   --------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Lexend', sans-serif;
+  font-weight: 400;
+  color: var(--text);
+  background-color: var(--bg);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------------------------------------------------------
+   Header
+   --------------------------------------------------------- */
+header {
+  background: linear-gradient(135deg, var(--navy) 0%, #1A4A7A 60%, #0D6B8A 100%);
+  color: #FFFFFF;
+  padding: 3.5rem 2rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Geometric neural-network background pattern */
+header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.12) 0%, transparent 40%),
+    radial-gradient(circle at 60% 80%, rgba(8, 145, 178, 0.10) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+/* Subtle dot-grid texture */
+header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+}
+
+header h1 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  position: relative;
+  z-index: 1;
+}
+
+header h1 span {
+  color: var(--teal-light);
+}
+
+header p {
+  font-size: 1.05rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 0.4rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------------------------------------------------
+   Navigation
+   --------------------------------------------------------- */
+nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  padding: 0 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+nav a {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 1.1rem 1.4rem;
+  position: relative;
+  transition: color var(--transition);
+}
+
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.4rem;
+  right: 1.4rem;
+  height: 3px;
+  background: var(--teal);
+  border-radius: 3px 3px 0 0;
+  transform: scaleX(0);
+  transition: transform var(--transition);
+}
+
+nav a:hover {
+  color: var(--teal);
+}
+
+nav a:hover::after,
+nav a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+nav a[aria-current="page"] {
+  color: var(--teal);
+}
+
+/* ---------------------------------------------------------
+   Main Content
+   --------------------------------------------------------- */
+main {
+  flex: 1;
+  max-width: var(--max-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 2rem 4rem;
+}
+
+/* ---------------------------------------------------------
+   Typography
+   --------------------------------------------------------- */
+h2 {
+  font-family: 'Sora', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin-bottom: 1rem;
+}
+
+h2::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-light));
+  border-radius: 4px;
+  margin-top: 0.6rem;
+}
+
+h3 {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-top: 2.2rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+h3::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--teal);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+p {
+  margin-bottom: 1.1rem;
+  color: var(--text);
+  max-width: 70ch;
+}
+
+/* ---------------------------------------------------------
+   Cards (wraps content sections)
+   --------------------------------------------------------- */
+main > p,
+main > h2,
+main > h3,
+main > ul,
+main > form {
+  animation: fadeUp 0.5s ease both;
+}
+
+main > *:nth-child(1) { animation-delay: 0.05s; }
+main > *:nth-child(2) { animation-delay: 0.1s;  }
+main > *:nth-child(3) { animation-delay: 0.15s; }
+main > *:nth-child(4) { animation-delay: 0.2s;  }
+main > *:nth-child(5) { animation-delay: 0.25s; }
+main > *:nth-child(6) { animation-delay: 0.3s;  }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Section card blocks */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* ---------------------------------------------------------
+   Lists
+   --------------------------------------------------------- */
+ul {
+  list-style: none;
+  margin: 0.5rem 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--teal);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 0.95rem;
+  transition: background var(--transition), border-left-color var(--transition);
+}
+
+li::before {
+  content: '→';
+  color: var(--teal);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+li:hover {
+  background: var(--teal-pale);
+  border-left-color: var(--teal-light);
+}
+
+/* ---------------------------------------------------------
+   Links
+   --------------------------------------------------------- */
+a:not(nav a) {
+  color: var(--teal);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color var(--transition), color var(--transition);
+}
+
+a:not(nav a):hover {
+  color: var(--navy);
+  border-bottom-color: var(--teal);
+}
+
+/* CTA link (as seen in index.html) */
+main > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--teal), var(--accent));
+  color: #FFFFFF !important;
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.85rem 1.75rem;
+  border-radius: 50px;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(8, 145, 178, 0.35);
+  transition: transform var(--transition), box-shadow var(--transition);
+  margin-top: 0.5rem;
+}
+
+main > a::after {
+  content: '→';
+  font-size: 1.1em;
+}
+
+main > a:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 24px rgba(8, 145, 178, 0.45);
+}
+
+/* ---------------------------------------------------------
+   Form (contatti.html)
+   --------------------------------------------------------- */
+form {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  max-width: 560px;
+}
+
+label {
+  display: block;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  border-color: var(--teal);
+  background: var(--surface);
+  box-shadow: 0 0 0 4px rgba(8, 145, 178, 0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+button[type="submit"] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--teal), var(--accent));
+  color: #FFFFFF;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.85rem 2rem;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(8, 145, 178, 0.35);
+  transition: transform var(--transition), box-shadow var(--transition);
+  margin-top: 0.5rem;
+}
+
+button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(8, 145, 178, 0.45);
+}
+
+button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------------------------------
+   Contact Info Block
+   --------------------------------------------------------- */
+main > p strong {
+  color: var(--teal);
+}
+
+/* ---------------------------------------------------------
+   Footer
+   --------------------------------------------------------- */
+footer {
+  background: var(--navy);
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+  padding: 1.75rem 2rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.02em;
+}
+
+/* ---------------------------------------------------------
+   Responsive
+   --------------------------------------------------------- */
+@media (max-width: 768px) {
+  nav {
+    flex-wrap: wrap;
+    gap: 0;
+  }
+
+  nav a {
+    flex: 1 1 auto;
+    text-align: center;
+    padding: 0.9rem 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  main {
+    padding: 2rem 1.25rem 3rem;
+  }
+
+  header {
+    padding: 2.5rem 1.25rem 2rem;
+  }
+
+  form {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  nav a {
+    font-size: 0.75rem;
+    padding: 0.85rem 0.5rem;
+  }
+}
