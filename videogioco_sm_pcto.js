@@ -13,11 +13,13 @@ let coppa;
 let viteMax = 5;
 let vite = 5;
 
+let skierSpeedX; // negativa = sinistra, positiva = destra
+
 let lastLifeLossFrame = 0;
-let lifeLossCooldown = 20; // ~0.4 secondi
+let lifeLossCooldown = 20;    // ~0.4 secondi
 
 let pistaOffsetY = 0;
-let pistaSpeed = 6;         // velocità scorrimento pista
+let pistaSpeed = 6;           // velocità scorrimento pista
 
 let canzone;
 let parti;
@@ -27,6 +29,16 @@ let playerSpeed = 8;
 
 let playerDir = "right";
 let playerW = 120;
+
+let x_sx_gameover_restart = 482;
+let x_dx_gameover_restart = 948;
+let y_so_gameover_restart = 275;
+let y_st_gameover_restart = 354;
+
+let x_sx_gameover_exit = 482;
+let x_dx_gameover_exit = 948;
+let y_so_gameover_exit = 377;
+let y_st_gameover_exit = 450;
 
 let schemaAttuale;
   //-2: start
@@ -61,12 +73,11 @@ let bodyPose;
 let poses = [];
 let connections;
 
-// NUOVO: contatore aggiornamenti pista per vittoria
 let aggiornamentiPista = 0;
 let vittoriaMostrata = false;
 
 function preload(){
-    bodyPose = ml5.bodyPose();    // Load the bodyPose model
+    bodyPose = ml5.bodyPose();
     player = loadImage('./img/sciatore.png');
     pista = loadImage('./img/prova.png');
     start_image = loadImage('./img/start_image.png');
@@ -88,8 +99,8 @@ function setup(){
     video = createCapture(VIDEO);
     video.size(640, 480);
     video.hide();
-    bodyPose.detectStart(video, gotPoses);  // Start detecting poses in the webcam video
-    connections = bodyPose.getSkeleton();   // Get the skeleton connection information
+    bodyPose.detectStart(video, gotPoses);
+    connections = bodyPose.getSkeleton();
     schemaAttuale = -2;
     oldSchema = schemaAttuale;
 }
@@ -115,7 +126,6 @@ function draw() {
       image(player, playerX, 500, playerW, player.height * (playerW / player.width));
     }
 
-    // NUOVO: mostra coppa se vittoria raggiunta
     if (vittoriaMostrata) {
       mostraVittoria();
     }
@@ -186,14 +196,25 @@ function mouseClicked() {
         schemaAttuale = 1;
       }, 7000);
     }
+    
   } else if(schemaAttuale == 2){
-      if(mouseX > x_sx_pausa_riprendi && mouseX < x_dx_pausa_riprendi && mouseY > y_so_pausa_riprendi && mouseY < y_st_pausa_riprendi){
+      if(mouseX > x_sx_gameover_restart && mouseX < x_dx_gameover_restart && mouseY > y_so_gameover_restart && mouseY < y_st_gameover_restart){
+          schemaAttuale = 1;
+          vite = 5;
+        }
+      else{
+        if(mouseX > x_sx_gameover_exit && mouseX < x_dx_gameover_exit && mouseY > y_so_gameover_exit && mouseY < y_st_gameover_exit){
+          schemaAttuale = -2;
+        }
+      }
+  } else if(schemaAttuale == 0){
+    if(mouseX > x_sx_pausa_riprendi && mouseX < x_dx_pausa_riprendi && mouseY > y_so_pausa_riprendi && mouseY < y_st_pausa_riprendi){
         schemaAttuale = 1;
       }
       if(mouseX > x_sx_pausa_esci && mouseX < x_dx_pausa_esci && mouseY > y_so_pausa_esci && mouseY < y_st_pausa_esci){
         schemaAttuale = -2;
       }
-    }
+  }
 }
 
 function keyPressed(){
@@ -215,6 +236,9 @@ function updatePlayerFromPose() {
   let noseX = nose.x;
   let center = video.width / 2;
   let deadZone = 40;
+
+  let oldX = playerX;   // salva posizione precedente
+
   if (noseX < center - deadZone) {
     playerX -= playerSpeed;
     playerDir = "left";
@@ -222,10 +246,13 @@ function updatePlayerFromPose() {
     playerX += playerSpeed;
     playerDir = "right";
   }
+
+  skierSpeedX = playerX - oldX;   // calcola la velocità corrente
+
   playerX = constrain(playerX, 0, width - playerW);
 }
 
-// --- FUNZIONE MODIFICATA PER VITTORIA ---
+
 function drawScrollingPista() {
   pistaOffsetY += pistaSpeed;
   if (pistaOffsetY >= height) {
@@ -234,7 +261,6 @@ function drawScrollingPista() {
   image(pista, 0, pistaOffsetY - height, width, height);    
   image(pista, 0, pistaOffsetY, width, height);
 
-  // incremento contatore aggiornamenti
   aggiornamentiPista++;
 
   if (aggiornamentiPista >= 5000 && !vittoriaMostrata) {
@@ -299,22 +325,31 @@ function drawVite() {
   }
 }
 
-// --- FUNZIONE MODIFICATA PER COLLISIONE INTERNA ---
 function checkDribbling() {
   for (let i = bandierine.length - 1; i >= 0; i--) {
     let b = bandierine[i];
     if (!b.checked && b.y > 500) {
       b.checked = true;
-
-      let skierLeft = playerX;
-      let skierRight = playerX + playerW;
-      let bandLeft = b.x;
-      let bandRight = b.x + bandierinaW;
-
-      // collisione rettangolare, qualsiasi contatto
-      let collisione = !(skierRight < bandLeft || skierLeft > bandRight);
-
-      if (collisione) {
+      let skierCenter = playerX + playerW / 2;
+      let bandCenter = b.x + bandierinaW / 2;
+      let staAndandoASinistra = skierSpeedX < 0;
+      let staAndandoADestra = skierSpeedX > 0;
+      let passedWrongSide = false;
+      // Caso 1: va a sinistra → DEVE stare a destra della bandierina
+      if (staAndandoASinistra) {
+        if (skierCenter > bandCenter) {
+          // è passato a sinistra = SBAGLIATO
+          passedWrongSide = true;
+        }
+      }
+      // Caso 2: va a destra → DEVE stare a sinistra della bandierina
+      if (staAndandoADestra) {
+        if (skierCenter < bandCenter) {
+          // è passato a destra = SBAGLIATO
+          passedWrongSide = true;
+        }
+      }
+      if (passedWrongSide) {
         loseLife();
       }
     }
