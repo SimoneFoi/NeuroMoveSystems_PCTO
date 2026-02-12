@@ -84,7 +84,7 @@ function preload(){
 function setup(){
     createCanvas(start_image.width, start_image.height);
     frameRate(50);
-    player = new Player(player, playerX, 500);
+    //player = new Player(player, playerX, 500);
     video = createCapture(VIDEO);
     video.size(640, 480);
     video.hide();
