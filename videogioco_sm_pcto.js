@@ -13,7 +13,7 @@ let coppa;
 let viteMax = 5;
 let vite = 5;
 
-let skierSpeedX; // negativa = sinistra, positiva = destra
+let skierSpeedX;              // negativa = sinistra, positiva = destra
 
 let lastLifeLossFrame = 0;
 let lifeLossCooldown = 20;    // ~0.4 secondi
@@ -205,6 +205,7 @@ function mouseClicked() {
       else{
         if(mouseX > x_sx_gameover_exit && mouseX < x_dx_gameover_exit && mouseY > y_so_gameover_exit && mouseY < y_st_gameover_exit){
           schemaAttuale = -2;
+          vite = 5;
         }
       }
   } else if(schemaAttuale == 0){
@@ -358,8 +359,7 @@ function loseLife() {
   if (frameCount - lastLifeLossFrame < lifeLossCooldown) return;
   lastLifeLossFrame = frameCount;
   vite--;
-  if (vite <= 0) {
-    vite = 0;
+  if (vite == 0) {
     schemaAttuale = 2;
   }
 }
