@@ -5,7 +5,7 @@ let bandierina;
 let bandierine = [];
 let maxBandierine = 5;
 let bandierinaW = 70;
-let safeOffsetX = 400;        // distanza minima orizzontale (PIÙ GRANDE)
+let safeOffsetX = 400;        // distanza minima orizzontale
 let safeOffsetY = 250;        // distanza minima verticale
 let cuore;
 let coppa;
@@ -181,8 +181,6 @@ function gotPoses(results) {
 }
 
 function musica(){}
-
-function stopAllMusic(){}
 
 function mouseClicked() {
   if (!parti && schemaAttuale == -2) {
