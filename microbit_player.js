@@ -1,5 +1,4 @@
-let x1, x2, y1, y2;
-
+// ------------------- CLASSE PLAYER -------------------
 class Player {
     constructor(imgIniziale, x, y) {
         this.spostamento = 20;
@@ -25,33 +24,14 @@ class Player {
             this.velocita_y += this.gravity;
             this.y += this.velocita_y;
         }
+        if (microbitCommand === "SINISTRA") this.x -= this.spostamento;
+        if (microbitCommand === "DESTRA") this.x += this.spostamento;
 
-        
-
-        // blocco sul terreno
         if (this.y >= this.groundY) {
             this.y = this.groundY;
             this.velocita_y = 0;
             this.ground = true;
         }
     }
-
-    morto(guerriero1, guerriero2) {
-        x1 = guerriero1.x + guerriero1.img.width / 2;
-        y1 = guerriero1.y + guerriero1.img.height / 2;
-        x2 = guerriero2.x + guerriero2.img.width / 2;
-        y2 = guerriero2.y + guerriero2.img.height / 2;
-
-        let d = dist(x1, y1, x2, y2);
-        return d <= (guerriero1.img.width / 2 + guerriero2.img.width / 2);
-    }
-
-    spostaSx() {
-        this.x -= this.spostamento;
-    }
-
-    spostaDx() {
-        this.x += this.spostamento;
-    }
-
 }
+

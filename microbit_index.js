@@ -114,7 +114,7 @@ function draw() {
         background(pista);
 
         drawScrollingPista();
-        player.discesa();              // aggiorna giocatore secondo Micro:bit
+        player.discesa();               //aggiorna giocatore secondo Micro:bit
         updateAndDrawBandierine();
         drawVite();
         checkDribbling();
@@ -217,46 +217,6 @@ function mostraVittoria() {
     text("HAI VINTO!", width / 2, height / 2 + coppaH / 2);
 }
 
-// ------------------- CLASSE PLAYER -------------------
-class Player {
-    constructor(imgIniziale, x, y) {
-        this.spostamento = 20;
-        this.img = imgIniziale;
-        this.x = x;
-        this.y = y;
-        this.groundY = y;
-        this.velocita_y = 0;
-        this.gravity = 10;
-        this.salto = 80;
-        this.ground = true;
-    }
-
-    jump() {
-        if (this.ground) { 
-            this.ground = false;
-            this.velocita_y = -this.salto;
-        }
-    }
-
-    discesa() {
-        if (!this.ground) {
-            this.velocita_y += this.gravity;
-            this.y += this.velocita_y;
-        }
-
-        // movimento orizzontale tramite Micro:bit
-        if (microbitCommand === "SINISTRA") this.x -= this.spostamento;
-        if (microbitCommand === "DESTRA") this.x += this.spostamento;
-
-        if (this.y >= this.groundY) {
-            this.y = this.groundY;
-            this.velocita_y = 0;
-            this.ground = true;
-        }
-    }
-}
-
-// ------------------- GESTIONE CLICK -------------------
 function mouseClicked() {
   // Avvia musica se non partita
   if (!parti && schemaAttuale == -2) {
@@ -264,7 +224,6 @@ function mouseClicked() {
     parti = true;
   }
 
-  // Start screen
   if (schemaAttuale == -2) {
     if (mouseX >= 431 && mouseX <= 1048 && mouseY >= 226 && mouseY <= 429) {
       schemaAttuale = -1; // tutorial
@@ -274,34 +233,27 @@ function mouseClicked() {
     }
   }
 
-  // Game Over
   else if (schemaAttuale == 2) {
-    // Restart
     if (mouseX > 482 && mouseX < 948 && mouseY > 275 && mouseY < 354) {
       schemaAttuale = 1;
       vite = 5;
     }
-    // Exit
     else if (mouseX > 482 && mouseX < 948 && mouseY > 377 && mouseY < 450) {
       schemaAttuale = -2;
       vite = 5;
     }
   }
 
-  // Pausa
   else if (schemaAttuale == 0) {
-    // Riprendi
     if (mouseX > 483 && mouseX < 941 && mouseY > 282 && mouseY < 356) {
       schemaAttuale = 1;
     }
-    // Esci
     if (mouseX > 483 && mouseX < 941 && mouseY > 378 && mouseY < 453) {
       schemaAttuale = -2;
     }
   }
 }
 
-// ------------------- GESTIONE TASTI -------------------
 function keyPressed(){
   if (key == 'p' || key == "Escape") {
     if (schemaAttuale != 0) {
