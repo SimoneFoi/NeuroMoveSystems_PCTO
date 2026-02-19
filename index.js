@@ -70,13 +70,13 @@ function draw() {
     } else if (schema == SCHEMI.home) {
         background(startImg)
     } else if (schema == SCHEMI.gioco) {
-        text(punteggio, 12, 40);
         background(pistaImg);
         pistaScorre()
-        disegnaBandiere()
         disegnaVite()
+        disegnaBandiere()
         controllaDribbling()
-
+        
+        text(punteggio, 12, 40);
         image(player.imgShow, player.x, player.y, playerWidth, playerHeight)
 
         let forzaX = microBit.getAccelerometer().x
