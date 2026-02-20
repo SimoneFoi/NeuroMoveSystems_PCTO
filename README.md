@@ -1,7 +1,8 @@
 # NeuroMoveSystems_PCTO
-Questo repository contiene tutti i programmi scritti durante le ore di PCTO, sia a scuola che a casa al pomeriggio
-Per giocare a questo videogioco ti servirà:
- 1) un Microbit
- 2) una batteria o un cavo USB da collegare a computer
+This repository contains all the programs written during PCTO hours, both at school and at home in the afternoon. To play this video game you will need:
+1) a Microbit
+2) a USB battery or cable to connect to a computer
 
-Per ulteriori informazioni su come funziona il nostro gioco ti invitiamo a visitare la nostra pagina web: https://giacomofresia.github.io/
+If you are playing for the first time you need to drag the microbit-BLEAllInOne.hex file onto the Microbit (from the Resource Explorer).
+
+For more information on how our game works, please visit our website: https://giacomofresia.github.io/
